@@ -9,42 +9,44 @@
 
 
     <!--Js and Css Style -->
-    <script src="{% static 'users/css/main.js' %}" defer> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css">
 
+    
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"> -->
     <!--Font Link-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans:wght@800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   </head>
 
-  <body id="bg" >
-  {% load static %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
-        <div class="container">
-          
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">HOME</a>
+  <body >
+  
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+      <a class="nav-link active" aria-current="page" href="{% url 'home' %}">HOME</a>
+      <form class="d-flex" id="authstyle">
+        {% if user.is_authenticated %}
+        <h5 style="color: rgb(9, 97, 228)">Hello {{user.username}} </h5>
+
+        <a href="{% url 'profil' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%);"type="submit" id="header-links"> Profil </a>
+        <a href="{% url 'logout' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%);"type="submit" id="header-links"> Logout </a>
+        {% else %}
+        <a href="{% url 'register' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%)"type="submit" id="header-links"> Create Account </a>
+        <a href="{% url 'login' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%); margin-left: 10px; "type="submit" id="header-links">Log In</a>
+
+      {% endif %}       
+      
+      </form>
+
+    </div>
+
               
 
-            </div>
-            <form class="d-flex" id="authstyle">
-              {% if user.is_authenticated %}
-                <h5>Hello {{user.username}} </h5>
-                <a href="{% url 'profil' %}" class="btn" style="color: wheat; background-color: hsl(223, 16%, 83%);"type="submit" id="header-links"> Profil </a>
-                <a href="{% url 'logout' %}" class="btn" style="color: wheat; background-color: hsl(223, 16%, 83%);"type="submit" id="header-links"> Logout </a>
-              {% else %}
-                <a href="{% url 'login' %}" class="btn" style="color: wheat; background-color: hsl(223, 16%, 83%); margin-left: 10px; "type="submit" id="header-links">Log In</a>
-              {% endif %}
-              </form>
-          </div>
-        </div>
     </nav>
 
       <div>
@@ -59,15 +61,18 @@
         {% endblock content %}
       </div>
 
-      <!-- Optional JavaScript; choose one of the two! -->
+     
+      <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/jquery-3.1.1.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
-      <!-- Option 1: Bootstrap Bundle with Popper -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
-      <!-- Option 2: Separate Popper and Bootstrap JS -->
-      <!--
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
-      -->
+      Scripts: Bootstraps, HTMX, and custom JavaScript -->
+      
+    
+
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> 
+      
   </body>
 </html>

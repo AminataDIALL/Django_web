@@ -6,10 +6,15 @@ class UserCreationForm(UserCreationForm):
 
    class Meta:
       model = User
-      fields = '__all__'
+      #fields = "__all__"
+      fields =('username', 'email', 'first_name', 'last_name')
 
-class UpdateForm(forms.Form):
-   email = forms.EmailField(widget=forms.EmailInput(attrs={
-       'class': 'form-control',
-       'id' : 'form_email',
-       'placeholder' : 'Your email '}))
+
+class UpdateForm(forms.ModelForm):
+
+   class Meta:
+      model = User
+      
+      fields =['email']
+  
+   

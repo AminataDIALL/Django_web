@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+
+    <title>Your Profil</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">HOME</a>
+          <form class="d-flex" id="authstyle">
+            {% if user.is_authenticated %}
+            <h5 style="color: rgb(9, 97, 228)">Hello {{user.username}} </h5>
+    
+            <a href="{% url 'profil' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%);"type="submit" id="header-links"> Profil </a>
+            <a href="{% url 'logout' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%);"type="submit" id="header-links"> Logout </a>
+            {% else %}
+            <a href="{% url 'register' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%)"type="submit" id="header-links"> Create Account </a>
+            <a href="{% url 'login' %}" class="btn" style="color: whitesmoke; background-color: hsl(236, 91%, 55%); margin-left: 10px; "type="submit" id="header-links">Log In</a>
+    
+          {% endif %}       
+          
+          </form>
+    
+        </div>
+    
+                  
+    
+        </nav>
+    <div class="container">
+      <div class="px-5 my-5 text-center">
+        <h1>Your Profil</h1>
+        
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>First_name</th>
+            <th>Last_name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody hx-trigger="load, movieListChanged from:body" hx-get="{% url 'liste' %}" hx-target="this">
+          <tr>
+            <td class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+
+    <!-- Placeholder for the modal -->
+    <div id="modal" class="modal fade">
+      <div id="dialog" class="modal-dialog" hx-target="this"></div>
+    </div>
+
+    <!-- Empty toast to show the message -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div id="toast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div id="toast-body" class="toast-body"></div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Scripts: Bootstraps, HTMX, and custom JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.6.1/dist/htmx.min.js"></script>
+    <script src="{% static 'users/dialog.js' %}"></script>
+    <script src="{% static 'users/toast.js' %}"></script>
+
+
+
+    <script>
+        ;(function () {
+          const modal = new bootstrap.Modal(document.getElementById("modal"))
+        
+          htmx.on("htmx:afterSwap", (e) => {
+            // Response targeting #dialog => show the modal
+            if (e.detail.target.id == "dialog") {
+              modal.show()
+            }
+          })
+        
+          htmx.on("htmx:beforeSwap", (e) => {
+            // Empty response targeting #dialog => hide the modal
+            if (e.detail.target.id == "dialog" && !e.detail.xhr.response) {
+              modal.hide()
+              e.detail.shouldSwap = false
+            }
+          })
+        
+          // Remove dialog content after hiding
+          htmx.on("hidden.bs.modal", () => {
+            document.getElementById("dialog").innerHTML = ""
+          })
+        })()
+      
+        
+      </script>
+      
+      <script>
+        ;(function () {
+          const toastElement = document.getElementById("toast")
+          const toastBody = document.getElementById("toast-body")
+          const toast = new bootstrap.Toast(toastElement, { delay: 2000 })
+        
+          htmx.on("showMessage", (e) => {
+            toastBody.innerText = e.detail.value
+            toast.show()
+          })
+        })()
+      </script>
+  </body>
+</html>

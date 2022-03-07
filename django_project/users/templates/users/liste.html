@@ -1,0 +1,10 @@
+
+<tr id="user-{{ user.pk }}" class="movie-row">
+  <td>{{ user.username }}</td>
+  <td>{{ user.email }}</td>
+  <td>{{ user.firstname }}</td>
+  <td>{{ user.lastname }}</td>
+  <td>
+    <button class="btn btn-primary btn-sm" hx-get="{% url 'edit_user' pk=user.pk %}" hx-target="#dialog">Edit</button>
+  </td>
+</tr>

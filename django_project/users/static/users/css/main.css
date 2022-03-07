@@ -2,10 +2,10 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-color : #C0C0C0
+    background-color : #f8f8f8 
   }
 #main-navbar{
-    color: white;
+    color: black;
     min-height: 14vh;
     font-size: 20px;
 }
@@ -16,7 +16,7 @@
     
   }
 #header-text{
-    color: white;
+    color: black;
     font-family: 'Open Sans', sans-serif;
     font-size: 50px;
     margin-top: 100px;
@@ -283,7 +283,7 @@ body {
 .container__child {
     width: 50%;
     height: 100%;
-    color: #fff;
+    color: #ffff;
     }
 .signup__thumbnail {
     position: relative;
@@ -302,14 +302,7 @@ body {
     position: relative;
     z-index: 2;
     }
-.thumbnail__logo {align-self: flex-start;}
-.logo__shape {fill: #fff;}
-.logo__text {
-    display: inline-block;
-    font-size: .8rem;
-    font-weight: 700;
-    vertical-align: bottom;
-    }
+
 .thumbnail__content {align-self: center;}
     h1,
     h2 {
@@ -330,12 +323,12 @@ body {
     }
 .signup__form {
     padding: 2.5rem;
-    background: #fafafa;
+    background: #696868;
     }
     label {
     font-size: .85rem;
     text-transform: uppercase;
-    color: #ccc;
+    color: #3d3d3d;
     }
 .form-control {
     background-color: transparent;
@@ -345,8 +338,8 @@ body {
     border-radius: 0;
     &:focus {border-color: #111;}
     }
-    [type="text"] {color: #111;}
-    [type="password"] {color: #111;}
+    [type="text"] {color: #565656;}
+    [type="password"] {color: #565656;}
 .btn--form {
     padding: .5rem 2.5rem;
     font-size: .95rem;

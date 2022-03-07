@@ -1,5 +1,5 @@
 {% extends 'users/base.html' %}
-
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block content %}
@@ -8,8 +8,8 @@
     <form action="" method="POST">
       {% csrf_token %}
       <fieldset class="form-group">
-          <legend class="border-bottom mb-4" style="color: white;">Login in now</legend>
-          {{ form}}
+          <legend class="border-bottom mb-4" style="color: rgb(10, 95, 173);">Login in now</legend>
+          {{ form |crispy}}
       </fieldset>
       <div class="form-group" id="signup-button">
           <button class="btn ">Sign In</button>

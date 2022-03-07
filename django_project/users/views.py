@@ -18,9 +18,6 @@ from django.shortcuts import get_object_or_404
 
 
 
-
-
-
 from .forms import UpdateForm, UserCreationForm
 
 def home_view(request):
@@ -56,32 +53,6 @@ def profil_view(request):
     return render(request, 'users/index.html',{'user':u})
 
 
-@login_required()
-def updat_view(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    if request.method == 'POST':
-        form = UpdateForm(request.POST, instance=user)
-    else:
-        form = UpdateForm(instance=user)
-    return save_product_form(request, form, 'users/profil.html')
-
-@login_required()
-def update_view(request):
-    update_form = UpdateForm(request.POST or None)
-    if request.method=="POST":
-        update_form = UpdateForm(request.POST or None)
-        email = request.POST['email']
-        print(email)
-        if request.user.is_authenticated:
-            username = request.user.username
-            u = User.objects.get(username=username)
-            u.email = email
-            u.save()
-            return redirect('profil')
-            
-    else:
-        form = UpdateForm()  
-    return render(request, 'users/update.html', {'form' : update_form })
  
 @login_required()
 def liste_view(request):
@@ -91,46 +62,6 @@ def liste_view(request):
         'user': User.objects.get(username=username),
     })
 
- 
-class UserView(ListView):
-    model = User
-    template_name = 'users/profil.html'
-    
-    def user(self,request):
-        
-        global username
-        username = request.user.username
-            
-        return username
-    def get_queryset(self):
-        
-        #return User.objects.get(username=username)
-        return User.objects.all()
-
-class UserUpdateView(UpdateView):
-    model = User
-    form_class = UpdateForm
-    template_name = 'users/edit.html'
-    queryset = User.objects.all()
-
-    def dispatch(self, *args, **kwargs):
-        self.user_id = kwargs['pk']
-        #kwargs['partial'] = True
-        return super(UserUpdateView, self).dispatch(*args, **kwargs)
-
-    # def form_valid(self, form):
-    #     form.save()
-    #     user = User.objects.get(id=self.user_id)
-    #     return HttpResponse(render_to_string('users/profil.html', {'user': user}))
-    def get(self,request, *args, **kwargs):
-        if request.is_ajax():
-            user = User.objects.get(id=self.user_id)
-            context = {
-                "user": user
-            }
-            template = loader.get_template("users/profil.html")
-            return HttpResponse(template.render(context, self.request))
-        return HttpResponse("Wrong request")
 
 
 def edit_profil(request, pk):
@@ -170,3 +101,22 @@ def update_user(request, pk):
                 "showMessage": f"{user.email} update."
             })
         })
+
+
+# @login_required()
+# def update_view(request):
+#     update_form = UpdateForm(request.POST or None)
+#     if request.method=="POST":
+#         update_form = UpdateForm(request.POST or None)
+#         email = request.POST['email']
+#         print(email)
+#         if request.user.is_authenticated:
+#             username = request.user.username
+#             u = User.objects.get(username=username)
+#             u.email = email
+#             u.save()
+#             return redirect('profil')
+            
+#     else:
+#         form = UpdateForm()  
+#     return render(request, 'users/update.html', {'form' : update_form })
